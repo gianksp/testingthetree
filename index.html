@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Thought Experiments</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500&display=swap');
+    body { font-family: 'Lora', Georgia, serif; }
+    .mono { font-family: 'JetBrains Mono', monospace; }
+    .card:hover .arrow { transform: translateX(4px); }
+    .arrow { transition: transform 0.2s ease; }
+  </style>
+</head>
+<body class="min-h-screen bg-[#f7f4ef] text-stone-900">
+
+  <main class="max-w-lg mx-auto px-5 py-16 sm:py-24">
+
+    <!-- Header -->
+    <div class="mb-14">
+      <div class="flex items-center gap-2 mb-5">
+        <div class="w-5 h-5 rounded-sm bg-stone-900 flex items-center justify-center flex-shrink-0">
+          <span class="text-white text-xs leading-none">∴</span>
+        </div>
+        <span class="mono text-xs uppercase tracking-widest text-stone-400">Thought experiments</span>
+      </div>
+      <h1 class="text-4xl sm:text-5xl text-stone-900 leading-tight mb-4">
+        Tools for thinking<br />about origins.
+      </h1>
+      <p class="text-base text-stone-500 leading-relaxed">
+        Three interactive experiments exploring inference, continuity, 
+        and what we can — and cannot — conclude from biological evidence.
+      </p>
+    </div>
+
+    <!-- Cards -->
+    <div class="space-y-3">
+
+      <a href="https://testingthetree.com/ool-gamble"
+         class="card block rounded-2xl border-2 border-stone-200 bg-white p-6 transition-all hover:border-stone-800 hover:shadow-sm group">
+        <div class="flex items-start justify-between gap-4">
+          <div>
+            <span class="mono text-xs uppercase tracking-widest text-stone-400">01</span>
+            <h2 class="text-xl text-stone-900 mt-1 mb-2 leading-snug">
+              Origin of Life Gambling
+            </h2>
+            <p class="text-sm text-stone-500 leading-relaxed">
+              What are the actual odds? An interactive probability experiment 
+              on the spontaneous origin of functional biological sequences.
+            </p>
+          </div>
+          <span class="arrow text-stone-300 text-xl flex-shrink-0 mt-1">→</span>
+        </div>
+      </a>
+
+      <a href="https://testingthetree.com/origami-experiment"
+         class="card block rounded-2xl border-2 border-stone-200 bg-white p-6 transition-all hover:border-stone-800 hover:shadow-sm group">
+        <div class="flex items-start justify-between gap-4">
+          <div>
+            <span class="mono text-xs uppercase tracking-widest text-stone-400">02</span>
+            <h2 class="text-xl text-stone-900 mt-1 mb-2 leading-snug">
+              Origami Experiment
+            </h2>
+            <p class="text-sm text-stone-500 leading-relaxed">
+              Can form tell you history? A hands-on demonstration of the 
+              principle of continuity and why similarity alone cannot 
+              establish ancestry.
+            </p>
+          </div>
+          <span class="arrow text-stone-300 text-xl flex-shrink-0 mt-1">→</span>
+        </div>
+      </a>
+
+      <a href="https://testingthetree.com/phyloviz"
+         class="card block rounded-2xl border-2 border-stone-200 bg-white p-6 transition-all hover:border-stone-800 hover:shadow-sm group">
+        <div class="flex items-start justify-between gap-4">
+          <div>
+            <span class="mono text-xs uppercase tracking-widest text-stone-400">03</span>
+            <h2 class="text-xl text-stone-900 mt-1 mb-2 leading-snug">
+              Phylogenetic Tree Visualizer
+            </h2>
+            <p class="text-sm text-stone-500 leading-relaxed">
+              Explore and interrogate phylogenetic trees built from 
+              protein sequence data. Visualize branch support, 
+              homoplasy, and the assumptions behind the topology.
+            </p>
+          </div>
+          <span class="arrow text-stone-300 text-xl flex-shrink-0 mt-1">→</span>
+        </div>
+      </a>
+
+    </div>
+
+    <!-- Footer -->
+    <div class="mt-16 pt-6 border-t border-stone-200">
+      <p class="mono text-xs text-stone-400 leading-relaxed">
+        These tools are thought experiments, not arguments from authority. 
+        Engage with the evidence directly.
+      </p>
+    </div>
+
+  </main>
+
+</body>
+</html>
