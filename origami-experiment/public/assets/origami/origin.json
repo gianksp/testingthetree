@@ -1,0 +1,6 @@
+[
+  { "animal": "whale",    "step": 24, "sharedWith": ["dolphin"] },
+  { "animal": "wolf",     "step": 1,  "sharedWith": ["turkey", "whale"] },
+  { "animal": "seal",     "step": 1,  "sharedWith": ["cat", "dolphin", "elephant", "fish", "pig"] },
+  { "animal": "capibara", "step": 1,  "sharedWith": [] }
+]

@@ -1,0 +1,12 @@
+[
+  { "id": "capibara", "steps": 58 },
+  { "id": "cat",      "steps": 31 },
+  { "id": "dolphin",  "steps": 33 },
+  { "id": "elephant", "steps": 50 },
+  { "id": "fish",     "steps": 60 },
+  { "id": "pig",      "steps": 57 },
+  { "id": "seal",     "steps": 43 },
+  { "id": "turkey",   "steps": 66 },
+  { "id": "whale",    "steps": 37 },
+  { "id": "wolf",     "steps": 33 }
+]

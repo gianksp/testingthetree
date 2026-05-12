@@ -1,0 +1,9 @@
+{
+  "pairs": [
+    { "animalA": "whale",  "stepA": 24, "animalB": "seal",     "stepB": 26 },
+    { "animalA": "turkey", "stepA": 45, "animalB": "elephant", "stepB": 33 },
+    { "animalA": "fish",   "stepA": 47, "animalB": "elephant", "stepB": 40 },
+    { "animalA": "turkey", "stepA": 12, "animalB": "capibara", "stepB": 18 },
+    { "animalA": "cat",    "stepA": 27, "animalB": "elephant", "stepB": 44 }
+  ]
+}

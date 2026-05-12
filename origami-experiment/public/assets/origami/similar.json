@@ -1,0 +1,14 @@
+{
+  "similar": {
+    "whale":    ["dolphin", "seal", "fish"],
+    "dolphin":  ["whale", "seal", "fish"],
+    "seal":     ["whale", "dolphin", "fish"],
+    "cat":      ["wolf", "capibara", "pig"],
+    "wolf":     ["cat", "capibara", "pig"],
+    "capibara": ["cat", "wolf", "pig"],
+    "pig":      ["cat", "wolf", "capibara"],
+    "fish":     ["whale", "dolphin", "seal"],
+    "elephant": ["pig", "capibara", "seal"],
+    "turkey":   ["wolf", "cat", "capibara"]
+  }
+}
