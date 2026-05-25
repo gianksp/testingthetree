@@ -1,0 +1,765 @@
+{
+    "version": 2,
+    "aliens": [
+        {
+            "id": "alien_001",
+            "file": "alien_001.jpg",
+            "name": "Zorbax",
+            "traits": {
+                "body": "round",
+                "legs": {
+                    "count": 6,
+                    "type": "humanoid"
+                },
+                "head": [],
+                "eyes": {
+                    "count": 1,
+                    "type": "lizard"
+                },
+                "mouth": "toothless",
+                "color": "blue"
+            }
+        },
+        {
+            "id": "alien_002",
+            "file": "alien_002.jpg",
+            "name": "Vynoodle",
+            "traits": {
+                "body": "round",
+                "legs": {
+                    "count": 4,
+                    "type": "humanoid"
+                },
+                "head": [
+                    "antenna",
+                    "antenna",
+                    "antenna"
+                ],
+                "eyes": {
+                    "count": 2,
+                    "type": "humanoid"
+                },
+                "mouth": "fang",
+                "color": "pink"
+            }
+        },
+        {
+            "id": "alien_003",
+            "file": "alien_003.jpg",
+            "name": "Krimpo",
+            "traits": {
+                "body": "round",
+                "legs": {
+                    "count": 4,
+                    "type": "humanoid"
+                },
+                "head": [
+                    "antenna",
+                    "antenna"
+                ],
+                "eyes": {
+                    "count": 2,
+                    "type": "humanoid"
+                },
+                "mouth": "toothless",
+                "color": "pink"
+            }
+        },
+        {
+            "id": "alien_004",
+            "file": "alien_004.jpg",
+            "name": "Snagglex",
+            "traits": {
+                "body": "round",
+                "legs": {
+                    "count": 4,
+                    "type": "humanoid"
+                },
+                "head": [
+                    "antenna",
+                    "antenna"
+                ],
+                "eyes": {
+                    "count": 2,
+                    "type": "humanoid"
+                },
+                "mouth": "teeth",
+                "color": "blue"
+            }
+        },
+        {
+            "id": "alien_005",
+            "file": "alien_005.jpg",
+            "name": "Trootle",
+            "traits": {
+                "body": "round",
+                "legs": {
+                    "count": 4,
+                    "type": "humanoid"
+                },
+                "head": [
+                    "bunny_ear",
+                    "bunny_ear"
+                ],
+                "eyes": {
+                    "count": 2,
+                    "type": "humanoid"
+                },
+                "mouth": "teeth",
+                "color": "pink"
+            }
+        },
+        {
+            "id": "alien_006",
+            "file": "alien_006.jpg",
+            "name": "Blibbit",
+            "traits": {
+                "body": "round",
+                "legs": {
+                    "count": 2,
+                    "type": "humanoid"
+                },
+                "head": [
+                    "antenna",
+                    "antenna",
+                    "antenna"
+                ],
+                "eyes": {
+                    "count": 2,
+                    "type": "humanoid"
+                },
+                "mouth": "fang",
+                "color": "green"
+            }
+        },
+        {
+            "id": "alien_007",
+            "file": "alien_007.jpg",
+            "name": "Gorlune",
+            "traits": {
+                "body": "round",
+                "legs": {
+                    "count": 2,
+                    "type": "humanoid"
+                },
+                "head": [
+                    "antenna",
+                    "antenna"
+                ],
+                "eyes": {
+                    "count": 2,
+                    "type": "humanoid"
+                },
+                "mouth": "teeth",
+                "color": "orange"
+            }
+        },
+        {
+            "id": "alien_008",
+            "file": "alien_008.jpg",
+            "name": "Mipzap",
+            "traits": {
+                "body": "round",
+                "legs": {
+                    "count": 2,
+                    "type": "humanoid"
+                },
+                "head": [
+                    "antenna",
+                    "antenna"
+                ],
+                "eyes": {
+                    "count": 2,
+                    "type": "humanoid"
+                },
+                "mouth": "teeth",
+                "color": "orange"
+            }
+        },
+        {
+            "id": "alien_009",
+            "file": "alien_009.jpg",
+            "name": "Crindle",
+            "traits": {
+                "body": "round",
+                "legs": {
+                    "count": 4,
+                    "type": "humanoid"
+                },
+                "head": [
+                    "bunny_ear",
+                    "bunny_ear"
+                ],
+                "eyes": {
+                    "count": 2,
+                    "type": "humanoid"
+                },
+                "mouth": "toothless",
+                "color": "purple"
+            }
+        },
+        {
+            "id": "alien_010",
+            "file": "alien_010.jpg",
+            "name": "Yabblet",
+            "traits": {
+                "body": "round",
+                "legs": {
+                    "count": 4,
+                    "type": "crustacean"
+                },
+                "head": [
+                    "antenna",
+                    "antenna",
+                    "antenna"
+                ],
+                "eyes": {
+                    "count": 2,
+                    "type": "humanoid"
+                },
+                "mouth": "toothless",
+                "color": "pink"
+            }
+        },
+        {
+            "id": "alien_011",
+            "file": "alien_011.jpg",
+            "name": "Floofin",
+            "traits": {
+                "body": "round",
+                "legs": {
+                    "count": 4,
+                    "type": "humanoid"
+                },
+                "head": [
+                    "horn",
+                    "horn",
+                    "horn"
+                ],
+                "eyes": {
+                    "count": 2,
+                    "type": "humanoid"
+                },
+                "mouth": "teeth",
+                "color": "green"
+            }
+        },
+        {
+            "id": "alien_012",
+            "file": "alien_012.jpg",
+            "name": "Quarmoo",
+            "traits": {
+                "body": "round",
+                "legs": {
+                    "count": 2,
+                    "type": "humanoid"
+                },
+                "head": [
+                    "antenna",
+                    "antenna"
+                ],
+                "eyes": {
+                    "count": 2,
+                    "type": "humanoid"
+                },
+                "mouth": "toothless",
+                "color": "blue"
+            }
+        },
+        {
+            "id": "alien_013",
+            "file": "alien_013.jpg",
+            "name": "Droonix",
+            "traits": {
+                "body": "round",
+                "legs": {
+                    "count": 4,
+                    "type": "humanoid"
+                },
+                "head": [
+                    "antenna",
+                    "antenna"
+                ],
+                "eyes": {
+                    "count": 2,
+                    "type": "humanoid"
+                },
+                "mouth": "teeth",
+                "color": "yellow"
+            }
+        },
+        {
+            "id": "alien_014",
+            "file": "alien_014.jpg",
+            "name": "Wobbloo",
+            "traits": {
+                "body": "round",
+                "legs": {
+                    "count": 4,
+                    "type": "humanoid"
+                },
+                "head": [
+                    "ear",
+                    "ear",
+                    "ear",
+                    "ear",
+                    "tongue"
+                ],
+                "eyes": {
+                    "count": 2,
+                    "type": "humanoid"
+                },
+                "mouth": "fang",
+                "color": "pink"
+            }
+        },
+        {
+            "id": "alien_015",
+            "file": "alien_015.jpg",
+            "name": "Nibnib",
+            "traits": {
+                "body": "round",
+                "legs": {
+                    "count": 4,
+                    "type": "humanoid"
+                },
+                "head": [
+                    "antenna",
+                    "antenna",
+                    "fin"
+                ],
+                "eyes": {
+                    "count": 1,
+                    "type": "humanoid"
+                },
+                "mouth": "toothless",
+                "color": "green"
+            }
+        },
+        {
+            "id": "alien_016",
+            "file": "alien_016.jpg",
+            "name": "Flariko",
+            "traits": {
+                "body": "square",
+                "legs": {
+                    "count": 4,
+                    "type": "short"
+                },
+                "head": [
+                    "antenna",
+                    "antenna"
+                ],
+                "eyes": {
+                    "count": 2,
+                    "type": "humanoid"
+                },
+                "mouth": "teeth",
+                "color": "green"
+            }
+        },
+        {
+            "id": "alien_164",
+            "file": "alien_164.jpg",
+            "name": "Zintar",
+            "traits": {
+                "body": "square",
+                "legs": {
+                    "count": 4,
+                    "type": "short"
+                },
+                "head": [
+                    "antenna"
+                ],
+                "eyes": {
+                    "count": 1,
+                    "type": "humanoid"
+                },
+                "mouth": "toothless",
+                "color": "blue"
+            }
+        },
+        {
+            "id": "alien_165",
+            "file": "alien_165.jpg",
+            "name": "Zintar",
+            "traits": {
+                "body": "triangle",
+                "legs": {
+                    "count": 2,
+                    "type": "short"
+                },
+                "head": [
+                    "antenna",
+                    "antenna"
+                ],
+                "eyes": {
+                    "count": 2,
+                    "type": "humanoid"
+                },
+                "mouth": "fang",
+                "color": "green"
+            }
+        },
+        {
+            "id": "alien_166",
+            "file": "alien_166.jpg",
+            "name": "Vexoodle",
+            "traits": {
+                "body": "square",
+                "legs": {
+                    "count": 2,
+                    "type": "short"
+                },
+                "head": [
+                    "feather",
+                    "feather",
+                    "feather"
+                ],
+                "eyes": {
+                    "count": 2,
+                    "type": "humanoid"
+                },
+                "mouth": "fang",
+                "color": "orange"
+            }
+        },
+        {
+            "id": "alien_171",
+            "file": "alien_171.jpg",
+            "name": "Ploopit",
+            "traits": {
+                "body": "triangle",
+                "legs": {
+                    "count": 2,
+                    "type": "short"
+                },
+                "head": [
+                    "ball"
+                ],
+                "eyes": {
+                    "count": 3,
+                    "type": "humanoid"
+                },
+                "mouth": "toothless",
+                "color": "purple"
+            }
+        },
+        {
+            "id": "alien_173",
+            "file": "alien_173.jpg",
+            "name": "Snorfle",
+            "traits": {
+                "body": "square",
+                "legs": {
+                    "count": 2,
+                    "type": "short"
+                },
+                "head": [
+                    "hair"
+                ],
+                "eyes": {
+                    "count": 4,
+                    "type": "humanoid"
+                },
+                "mouth": "toothless",
+                "color": "blue"
+            }
+        },
+        {
+            "id": "alien_174",
+            "file": "alien_174.jpg",
+            "name": "Gribblet",
+            "traits": {
+                "body": "square",
+                "legs": {
+                    "count": 2,
+                    "type": "short"
+                },
+                "head": [
+                    "hair"
+                ],
+                "eyes": {
+                    "count": 1,
+                    "type": "humanoid"
+                },
+                "mouth": "toothless",
+                "color": "pink"
+            }
+        },
+        {
+            "id": "alien_175",
+            "file": "alien_175.jpg",
+            "name": "Tinkaroo",
+            "traits": {
+                "body": "square",
+                "legs": {
+                    "count": 2,
+                    "type": "short"
+                },
+                "head": [
+                    "antenna",
+                    "antenna"
+                ],
+                "eyes": {
+                    "count": 1,
+                    "type": "humanoid"
+                },
+                "mouth": "toothless",
+                "color": "purple"
+            }
+        },
+        {
+            "id": "alien_176",
+            "file": "alien_176.jpg",
+            "name": "Yorpix",
+            "traits": {
+                "body": "square",
+                "legs": {
+                    "count": 2,
+                    "type": "short"
+                },
+                "head": [
+                    "hair"
+                ],
+                "eyes": {
+                    "count": 2,
+                    "type": "snake"
+                },
+                "mouth": "fang",
+                "color": "green"
+            }
+        },
+        {
+            "id": "alien_176",
+            "file": "alien_176.jpg",
+            "name": "Flumpra",
+            "traits": {
+                "body": "square",
+                "legs": {
+                    "count": 2,
+                    "type": "short"
+                },
+                "head": [
+                    "hair"
+                ],
+                "eyes": {
+                    "count": 4,
+                    "type": "humanoid"
+                },
+                "mouth": "teeth",
+                "color": "orange"
+            }
+        },
+        {
+            "id": "alien_177",
+            "file": "alien_177.jpg",
+            "name": "Flumpra",
+            "traits": {
+                "body": "square",
+                "legs": {
+                    "count": 2,
+                    "type": "short"
+                },
+                "head": [
+                    "hair"
+                ],
+                "eyes": {
+                    "count": 4,
+                    "type": "humanoid"
+                },
+                "mouth": "teeth",
+                "color": "orange"
+            }
+        },
+        {
+            "id": "alien_178",
+            "file": "alien_178.jpg",
+            "name": "Kazzle",
+            "traits": {
+                "body": "circle",
+                "legs": {
+                    "count": 2,
+                    "type": "short"
+                },
+                "head": [
+                    "hair"
+                ],
+                "eyes": {
+                    "count": 1,
+                    "type": "snake"
+                },
+                "mouth": "toothless",
+                "color": "purple"
+            }
+        },
+        {
+            "id": "alien_187",
+            "file": "alien_187.jpg",
+            "name": "Bimblop",
+            "traits": {
+                "body": "circle",
+                "legs": {
+                    "count": 5,
+                    "type": "tentacles"
+                },
+                "head": [
+                    "antenna", "antenna"
+                ],
+                "eyes": {
+                    "count": 3,
+                    "type": "humanoid"
+                },
+                "mouth": "teeth",
+                "color": "pink"
+            }
+        },
+        {
+            "id": "alien_188",
+            "file": "alien_188.jpg",
+            "name": "Croonix",
+            "traits": {
+                "body": "circle",
+                "legs": {
+                    "count": 6,
+                    "type": "tentacles"
+                },
+                "head": [
+                    "antenna", "antenna"
+                ],
+                "eyes": {
+                    "count": 3,
+                    "type": "humanoid"
+                },
+                "mouth": "teeth",
+                "color": "blue"
+            }
+        },
+        {
+            "id": "alien_189",
+            "file": "alien_189.jpg",
+            "name": "Velmoro",
+            "traits": {
+                "body": "circle",
+                "legs": {
+                    "count": 4,
+                    "type": "tentacles"
+                },
+                "head": [
+                    "horn", "horn"
+                ],
+                "eyes": {
+                    "count": 1,
+                    "type": "humanoid"
+                },
+                "mouth": "fang",
+                "color": "green"
+            }
+        },
+        {
+            "id": "alien_192",
+            "file": "alien_192.jpg",
+            "name": "Jibloo",
+            "traits": {
+                "body": "circle",
+                "legs": {
+                    "count": 5,
+                    "type": "tentacles"
+                },
+                "head": [
+                    "hair"
+                ],
+                "eyes": {
+                    "count": 1,
+                    "type": "humanoid"
+                },
+                "mouth": "fang",
+                "color": "yellow"
+            }
+        },
+        {
+            "id": "alien_194",
+            "file": "alien_194.jpg",
+            "name": "Turtique",
+            "traits": {
+                "body": "circle",
+                "legs": {
+                    "count": 6,
+                    "type": "tentacles"
+                },
+                "head": [
+                    "horn", "horn", "antenna", "antenna", "antenna"
+                ],
+                "eyes": {
+                    "count": 4,
+                    "type": "humanoid"
+                },
+                "mouth": "toothless",
+                "color": "blue"
+            }
+        },
+        {
+            "id": "alien_040",
+            "file": "alien_040.jpg",
+            "name": "Splimzo",
+            "traits": {
+                "body": "triangle",
+                "legs": {
+                    "count": 0,
+                    "type": "humanoid"
+                },
+                "head": [
+                    "antenna", "antenna"
+                ],
+                "eyes": {
+                    "count": 2,
+                    "type": "humanoid"
+                },
+                "mouth": "teeth",
+                "color": "orange"
+            }
+        },
+        {
+            "id": "alien_063",
+            "file": "alien_063.jpg",
+            "name": "Crabboon",
+            "traits": {
+                "body": "circle",
+                "legs": {
+                    "count": 4,
+                    "type": "short"
+                },
+                "head": [
+                    "horn", "horn", "ear", "ear"
+                ],
+                "eyes": {
+                    "count": 2,
+                    "type": "humanoid"
+                },
+                "mouth": "teeth",
+                "color": "blue"
+            }
+        },
+        {
+            "id": "alien_065",
+            "file": "alien_065.jpg",
+            "name": "Wozzit",
+            "traits": {
+                "body": "square",
+                "legs": {
+                    "count": 4,
+                    "type": "short"
+                },
+                "head": [
+                    "antenna", "antenna"
+                ],
+                "eyes": {
+                    "count": 2,
+                    "type": "humanoid"
+                },
+                "mouth": "teeth",
+                "color": "green"
+            }
+        }
+    ]
+}
