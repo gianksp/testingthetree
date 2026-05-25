@@ -1,106 +1,187 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Thought Experiments</title>
+  <title>Testing the Tree</title>
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500&display=swap');
-    body { font-family: 'Lora', Georgia, serif; }
-    .mono { font-family: 'JetBrains Mono', monospace; }
-    .card:hover .arrow { transform: translateX(4px); }
-    .arrow { transition: transform 0.2s ease; }
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap');
+
+    body {
+      font-family: Inter, sans-serif;
+    }
+
+    .mono {
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .card {
+      background: linear-gradient(180deg, rgba(18, 28, 52, .96), rgba(8, 14, 30, .96));
+      border: 1px solid rgba(125, 211, 252, .18);
+      box-shadow: 0 0 0 1px rgba(255, 255, 255, .03), 0 20px 50px rgba(0, 0, 0, .35);
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(34, 211, 238, .7);
+      box-shadow: 0 0 28px rgba(34, 211, 238, .18), 0 24px 70px rgba(0, 0, 0, .5);
+    }
+
+    .glow {
+      background:
+        radial-gradient(circle at 20% 20%, rgba(34, 211, 238, .22), transparent 35%),
+        radial-gradient(circle at 80% 10%, rgba(168, 85, 247, .22), transparent 35%),
+        radial-gradient(circle at 50% 90%, rgba(236, 72, 153, .16), transparent 40%);
+    }
   </style>
 </head>
-<body class="min-h-screen bg-[#f7f4ef] text-stone-900">
 
-  <main class="max-w-lg mx-auto px-5 py-16 sm:py-24">
+<body class="min-h-screen bg-[#030712] text-white overflow-x-hidden">
+
+  <div class="fixed inset-0 glow pointer-events-none"></div>
+
+  <main class="relative max-w-6xl mx-auto px-5 py-10 sm:py-16">
 
     <!-- Header -->
-    <div class="mb-14">
-      <div class="flex items-center gap-2 mb-5">
-        <div class="w-5 h-5 rounded-sm bg-stone-900 flex items-center justify-center flex-shrink-0">
-          <span class="text-white text-xs leading-none">∴</span>
+    <header class="flex items-center justify-between mb-16">
+      <div class="flex items-center gap-3">
+        <div
+          class="w-11 h-11 rounded-2xl bg-cyan-400 text-slate-950 flex items-center justify-center font-black text-xl shadow-[0_0_30px_rgba(34,211,238,.45)]">
+          ∴
         </div>
-        <span class="mono text-xs uppercase tracking-widest text-stone-400">Thought experiments</span>
+        <div>
+          <div class="mono text-xl font-black tracking-[0.28em]">
+            TESTING<span class="text-cyan-300">THE</span>TREE
+          </div>
+          <div class="mono text-[10px] text-slate-400 uppercase tracking-[0.25em]">
+            Evolution Simulations · Visual Tools · Mini Games
+          </div>
+        </div>
       </div>
-      <h1 class="text-4xl sm:text-5xl text-stone-900 leading-tight mb-4">
-        Tools for thinking<br />about origins.
-      </h1>
-      <p class="text-base text-stone-500 leading-relaxed">
-        Three interactive experiments exploring inference, continuity, 
-        and what we can — and cannot — conclude from biological evidence.
+
+      <div class="hidden sm:block mono text-xs text-cyan-300 border border-cyan-300/30 rounded-full px-4 py-2">
+        Research Dashboard
+      </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="grid lg:grid-cols-[1.1fr_.9fr] gap-10 items-center mb-12">
+      <div>
+        <div class="mono text-cyan-300 text-xs uppercase tracking-[0.35em] mb-4">
+          Interactive Biology Lab
+        </div>
+
+        <h1 class="text-5xl sm:text-7xl font-black leading-[0.95] tracking-tight mb-6">
+          Play with the logic of origins.
+        </h1>
+
+        <p class="text-slate-300 text-lg leading-relaxed max-w-2xl">
+          Explore simulations, visualizations, and mini games that test how we infer ancestry,
+          probability, similarity, and biological history.
+        </p>
+      </div>
+
+      <div class="card rounded-[2rem] p-6">
+        <div class="mono text-xs text-cyan-300 uppercase tracking-widest mb-4">
+          Current Mission
+        </div>
+        <h2 class="text-2xl font-extrabold mb-3">Classify the unknown.</h2>
+        <p class="text-slate-300 text-sm leading-relaxed mb-5">
+          Each tool gives you a different way to test assumptions about life, ancestry,
+          and biological evidence.
+        </p>
+        <div class="grid grid-cols-3 gap-3 text-center">
+          <div class="rounded-xl bg-white/5 p-3">
+            <div class="text-2xl font-black text-cyan-300">4</div>
+            <div class="mono text-[10px] text-slate-400">TOOLS</div>
+          </div>
+          <div class="rounded-xl bg-white/5 p-3">
+            <div class="text-2xl font-black text-fuchsia-300">1</div>
+            <div class="mono text-[10px] text-slate-400">GAME</div>
+          </div>
+          <div class="rounded-xl bg-white/5 p-3">
+            <div class="text-2xl font-black text-yellow-300">∞</div>
+            <div class="mono text-[10px] text-slate-400">TESTS</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tool Cards -->
+    <section class="grid sm:grid-cols-2 gap-5">
+
+      <a href="https://testingthetree.com/ool-gamble" class="card rounded-3xl p-6 transition-all duration-200">
+        <div class="flex items-start gap-4">
+          <div class="w-14 h-14 rounded-2xl bg-yellow-300 text-slate-950 flex items-center justify-center text-2xl">🎲
+          </div>
+          <div>
+            <div class="mono text-[10px] text-yellow-300 uppercase tracking-widest mb-2">Simulation</div>
+            <h2 class="text-2xl font-extrabold mb-2">Origin of Life Gamble</h2>
+            <p class="text-slate-300 text-sm leading-relaxed">
+              Test how rare functional biological sequences are by running probability trials.
+            </p>
+            <p class="mt-4 mono text-xs text-cyan-300">Objective: beat the odds →</p>
+          </div>
+        </div>
+      </a>
+
+      <a href="https://testingthetree.com/origami-experiment" class="card rounded-3xl p-6 transition-all duration-200">
+        <div class="flex items-start gap-4">
+          <div class="w-14 h-14 rounded-2xl bg-pink-300 text-slate-950 flex items-center justify-center text-2xl">🧩
+          </div>
+          <div>
+            <div class="mono text-[10px] text-pink-300 uppercase tracking-widest mb-2">Simulation</div>
+            <h2 class="text-2xl font-extrabold mb-2">Origami Ancestry Test</h2>
+            <p class="text-slate-300 text-sm leading-relaxed">
+              See why similar shapes do not automatically prove shared history.
+            </p>
+            <p class="mt-4 mono text-xs text-cyan-300">Objective: separate similarity from ancestry →</p>
+          </div>
+        </div>
+      </a>
+
+      <a href="https://testingthetree.com/phyloviz" class="card rounded-3xl p-6 transition-all duration-200">
+        <div class="flex items-start gap-4">
+          <div class="w-14 h-14 rounded-2xl bg-cyan-300 text-slate-950 flex items-center justify-center text-2xl">🌳
+          </div>
+          <div>
+            <div class="mono text-[10px] text-cyan-300 uppercase tracking-widest mb-2">Visualization Tool</div>
+            <h2 class="text-2xl font-extrabold mb-2">Phylogenetic Tree Visualizer</h2>
+            <p class="text-slate-300 text-sm leading-relaxed">
+              Explore tree diagrams built from sequence data and inspect their assumptions.
+            </p>
+            <p class="mt-4 mono text-xs text-cyan-300">Objective: read the tree critically →</p>
+          </div>
+        </div>
+      </a>
+
+      <a href="https://testingthetree.com/phylo-game" class="card rounded-3xl p-6 transition-all duration-200">
+        <div class="flex items-start gap-4">
+          <div class="w-14 h-14 rounded-2xl bg-purple-300 text-slate-950 flex items-center justify-center text-2xl">👾
+          </div>
+          <div>
+            <div class="mono text-[10px] text-purple-300 uppercase tracking-widest mb-2">Mini Game</div>
+            <h2 class="text-2xl font-extrabold mb-2">Xenobiology Classification Lab</h2>
+            <p class="text-slate-300 text-sm leading-relaxed">
+              Sort alien specimens into hidden evolutionary groups using trait clues.
+            </p>
+            <p class="mt-4 mono text-xs text-cyan-300">Objective: discover the true clades →</p>
+          </div>
+        </div>
+      </a>
+
+    </section>
+
+    <footer class="mt-14 pt-6 border-t border-white/10">
+      <p class="mono text-xs text-slate-500">
+        Built as interactive thought experiments. Test the models. Inspect the assumptions.
       </p>
-    </div>
-
-    <!-- Cards -->
-    <div class="space-y-3">
-
-      <a href="https://testingthetree.com/ool-gamble"
-         class="card block rounded-2xl border-2 border-stone-200 bg-white p-6 transition-all hover:border-stone-800 hover:shadow-sm group">
-        <div class="flex items-start justify-between gap-4">
-          <div>
-            <span class="mono text-xs uppercase tracking-widest text-stone-400">01</span>
-            <h2 class="text-xl text-stone-900 mt-1 mb-2 leading-snug">
-              Origin of Life Gambling
-            </h2>
-            <p class="text-sm text-stone-500 leading-relaxed">
-              What are the actual odds? An interactive probability experiment 
-              on the spontaneous origin of functional biological sequences.
-            </p>
-          </div>
-          <span class="arrow text-stone-300 text-xl flex-shrink-0 mt-1">→</span>
-        </div>
-      </a>
-
-      <a href="https://testingthetree.com/origami-experiment"
-         class="card block rounded-2xl border-2 border-stone-200 bg-white p-6 transition-all hover:border-stone-800 hover:shadow-sm group">
-        <div class="flex items-start justify-between gap-4">
-          <div>
-            <span class="mono text-xs uppercase tracking-widest text-stone-400">02</span>
-            <h2 class="text-xl text-stone-900 mt-1 mb-2 leading-snug">
-              Origami Experiment
-            </h2>
-            <p class="text-sm text-stone-500 leading-relaxed">
-              Can form tell you history? A hands-on demonstration of the 
-              principle of continuity and why similarity alone cannot 
-              establish ancestry.
-            </p>
-          </div>
-          <span class="arrow text-stone-300 text-xl flex-shrink-0 mt-1">→</span>
-        </div>
-      </a>
-
-      <a href="https://testingthetree.com/phyloviz"
-         class="card block rounded-2xl border-2 border-stone-200 bg-white p-6 transition-all hover:border-stone-800 hover:shadow-sm group">
-        <div class="flex items-start justify-between gap-4">
-          <div>
-            <span class="mono text-xs uppercase tracking-widest text-stone-400">03</span>
-            <h2 class="text-xl text-stone-900 mt-1 mb-2 leading-snug">
-              Phylogenetic Tree Visualizer
-            </h2>
-            <p class="text-sm text-stone-500 leading-relaxed">
-              Explore and interrogate phylogenetic trees built from 
-              protein sequence data. Visualize branch support, 
-              homoplasy, and the assumptions behind the topology.
-            </p>
-          </div>
-          <span class="arrow text-stone-300 text-xl flex-shrink-0 mt-1">→</span>
-        </div>
-      </a>
-
-    </div>
-
-    <!-- Footer -->
-    <div class="mt-16 pt-6 border-t border-stone-200">
-      <p class="mono text-xs text-stone-400 leading-relaxed">
-        These tools are thought experiments, not arguments from authority. 
-        Engage with the evidence directly.
-      </p>
-    </div>
+    </footer>
 
   </main>
-
 </body>
+
 </html>

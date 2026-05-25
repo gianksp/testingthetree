@@ -1,11 +1,17 @@
 // src/game/alienData.js
 
-export const ALIENS_BASE_URL = '/aliens/'
-export const MANIFEST_URL = '/aliens/manifest.json'
+const BASE = import.meta.env.BASE_URL
+
+export const ALIENS_BASE_URL = `${BASE}aliens/`
+export const MANIFEST_URL = `${BASE}aliens/manifest.json`
 
 export async function loadManifest() {
     const res = await fetch(MANIFEST_URL)
-    if (!res.ok) throw new Error(`Failed to load manifest: ${res.status}`)
+
+    if (!res.ok) {
+        throw new Error(`Failed to load manifest: ${res.status} from ${MANIFEST_URL}`)
+    }
+
     const json = await res.json()
 
     if (!Array.isArray(json.aliens)) {
