@@ -1,3 +1,7 @@
+const BASE = import.meta.env.BASE_URL
+
+export const ALIENS_BASE_URL = `${BASE}`
+
 // src/components/HowToPlay.jsx
 export default function HowToPlay({ onStart }) {
     return (
@@ -23,7 +27,7 @@ export default function HowToPlay({ onStart }) {
                 <div className="relative w-full">
                     <div className="flex justify-center">
                         <img
-                            src="/logo.png"
+                            src={`${ALIENS_BASE_URL}logo.png`}
                             alt="mascot"
                             className="w-full max-w-xs sm:max-w-sm h-auto object-contain relative z-10"
                             style={{

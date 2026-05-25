@@ -10,6 +10,10 @@ const NODE_LABELS = {
     5: 'Species III',
 }
 
+const BASE = import.meta.env.BASE_URL
+
+export const ALIENS_BASE_URL = `${BASE}aliens/`
+
 const EDGES = [[0, 1], [0, 2], [1, 3], [1, 4], [2, 5]]
 
 function TreeNode({
@@ -57,7 +61,7 @@ function TreeNode({
                     <>
                         {/* img must NOT intercept pointer — data-node-id on parent handles it */}
                         <img
-                            src={`/aliens/${alien.file}`}
+                            src={`${ALIENS_BASE_URL}${alien.file}`}
                             alt={alien.name}
                             draggable={false}
                             className="w-full h-full object-contain p-2 rounded-2xl pointer-events-none"

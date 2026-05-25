@@ -1,4 +1,7 @@
 // src/components/DragGhost.jsx
+const BASE = import.meta.env.BASE_URL
+
+export const ALIENS_BASE_URL = `${BASE}aliens/`
 export default function DragGhost({ file, x, y }) {
     if (!file) return null
     return (
@@ -15,7 +18,7 @@ export default function DragGhost({ file, x, y }) {
             <div className="w-full h-full rounded-xl bg-white border-2 border-cyan-400
                       shadow-xl shadow-cyan-500/40 overflow-hidden opacity-90">
                 <img
-                    src={`/aliens/${file}`}
+                    src={`${ALIENS_BASE_URL}"${file}`}
                     alt=""
                     className="w-full h-full object-contain p-1"
                     draggable={false}

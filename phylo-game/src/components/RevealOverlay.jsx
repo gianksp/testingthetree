@@ -11,6 +11,10 @@ const NODE_LABELS = {
 
 const NODE_DESCRIPTIONS = (rule) => rule.cladeDescriptions ?? {}
 
+const BASE = import.meta.env.BASE_URL
+
+export const ALIENS_BASE_URL = `${BASE}aliens/`
+
 const SCORE_DATA = {
     0: { label: 'Incorrect', sub: 'The phylogeny had other plans.', color: 'text-red-400' },
     1: { label: '1 / 6', sub: 'One correct placement.', color: 'text-orange-400' },
@@ -35,7 +39,7 @@ function AlienThumb({ alien, correct }) {
                 correct === false ? 'border-red-500' : 'border-slate-300'}
     `}>
             <img
-                src={`/aliens/${alien.file}`}
+                src={`${ALIENS_BASE_URL}${alien.file}`}
                 alt={alien.name}
                 className="w-full h-full object-contain"
                 draggable={false}
@@ -68,7 +72,7 @@ function RevealTree({ correctTree, nodeResults }) {
         `}>
                     {alien && (
                         <img
-                            src={`/aliens/${alien.file}`}
+                            src={`${ALIENS_BASE_URL}${alien.file}`}
                             alt={alien?.name}
                             className="w-full h-full object-contain p-0.5"
                             draggable={false}
@@ -223,7 +227,7 @@ export default function RevealOverlay({ result, rule, onNext }) {
                                 </span>
                                 {alien && (
                                     <div className="w-8 h-8 rounded-lg overflow-hidden bg-white shrink-0 border border-slate-200">
-                                        <img src={`/aliens/${alien.file}`} alt={alien.name}
+                                        <img src={`${ALIENS_BASE_URL}${alien.file}`} alt={alien.name}
                                             className="w-full h-full object-contain" draggable={false} />
                                     </div>
                                 )}
