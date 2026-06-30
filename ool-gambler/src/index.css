@@ -2,3 +2,48 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 @import "@fontsource-variable/geist";
+
+@keyframes bulbChase {
+
+    0%,
+    88% {
+        opacity: 0.25;
+        filter: brightness(0.6);
+    }
+
+    92% {
+        opacity: 1;
+        filter: brightness(1.4);
+    }
+
+    100% {
+        opacity: 0.25;
+        filter: brightness(0.6);
+    }
+}
+
+@keyframes wapperToastPop {
+    0% {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+
+    10% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+    80% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(-10px);
+        opacity: 0;
+    }
+}
+
+.wapper-toast {
+    animation: wapperToastPop 2.6s ease forwards;
+}
