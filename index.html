@@ -4,199 +4,806 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Testing the Tree</title>
+
+  <title>Arcadia — Play Instant Minigames</title>
+  <meta name="description" content="A mobile-first gaming platform for discovering and playing instant minigames." />
+
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap');
+    @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap");
+
+    html {
+      scroll-behavior: smooth;
+    }
 
     body {
-      font-family: Inter, sans-serif;
+      font-family: "Inter", sans-serif;
     }
 
-    .mono {
-      font-family: 'JetBrains Mono', monospace;
+    .game-card {
+      transition:
+        transform 180ms ease,
+        border-color 180ms ease,
+        box-shadow 180ms ease;
     }
 
-    .card {
-      background: linear-gradient(180deg, rgba(18, 28, 52, .96), rgba(8, 14, 30, .96));
-      border: 1px solid rgba(125, 211, 252, .18);
-      box-shadow: 0 0 0 1px rgba(255, 255, 255, .03), 0 20px 50px rgba(0, 0, 0, .35);
-    }
-
-    .card:hover {
+    .game-card:hover {
       transform: translateY(-4px);
-      border-color: rgba(34, 211, 238, .7);
-      box-shadow: 0 0 28px rgba(34, 211, 238, .18), 0 24px 70px rgba(0, 0, 0, .5);
     }
 
     .glow {
       background:
-        radial-gradient(circle at 20% 20%, rgba(34, 211, 238, .22), transparent 35%),
-        radial-gradient(circle at 80% 10%, rgba(168, 85, 247, .22), transparent 35%),
-        radial-gradient(circle at 50% 90%, rgba(236, 72, 153, .16), transparent 40%);
+        radial-gradient(circle at 20% 20%, rgba(139, 92, 246, 0.2), transparent 35%),
+        radial-gradient(circle at 80% 30%, rgba(34, 211, 238, 0.16), transparent 35%),
+        radial-gradient(circle at 50% 90%, rgba(236, 72, 153, 0.12), transparent 40%);
+    }
+
+    .grid-pattern {
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+      background-size: 32px 32px;
+    }
+
+    /* Motion system — uses individual transform properties so Tailwind transforms keep working */
+    .reveal {
+      opacity: 0;
+      translate: 0 28px;
+      transition:
+        opacity 700ms cubic-bezier(.22, 1, .36, 1),
+        translate 700ms cubic-bezier(.22, 1, .36, 1);
+      transition-delay: var(--delay, 0ms);
+      will-change: opacity, translate;
+    }
+
+    .reveal.is-visible {
+      opacity: 1;
+      translate: 0 0;
+    }
+
+    .float-soft {
+      animation: float-soft 4s ease-in-out infinite;
+    }
+
+    .pulse-soft {
+      animation: pulse-soft 2.8s ease-in-out infinite;
+    }
+
+    .drift-right {
+      animation: drift-right 3.6s ease-in-out infinite;
+    }
+
+    .drift-left {
+      animation: drift-left 3.8s ease-in-out infinite;
+    }
+
+    .glow-pulse {
+      animation: glow-pulse 2.4s ease-in-out infinite;
+    }
+
+    .sequence-pop {
+      animation: sequence-pop 2.2s ease-in-out infinite;
+    }
+
+    @keyframes float-soft {
+
+      0%,
+      100% {
+        translate: 0 0;
+      }
+
+      50% {
+        translate: 0 -9px;
+      }
+    }
+
+    @keyframes pulse-soft {
+
+      0%,
+      100% {
+        scale: 1;
+      }
+
+      50% {
+        scale: 1.06;
+      }
+    }
+
+    @keyframes drift-right {
+
+      0%,
+      100% {
+        translate: 0 0;
+      }
+
+      50% {
+        translate: 8px 0;
+      }
+    }
+
+    @keyframes drift-left {
+
+      0%,
+      100% {
+        translate: 0 0;
+      }
+
+      50% {
+        translate: -8px 0;
+      }
+    }
+
+    @keyframes glow-pulse {
+
+      0%,
+      100% {
+        box-shadow: 0 0 14px rgba(103, 232, 249, .28);
+        background-color: rgba(103, 232, 249, .10);
+      }
+
+      50% {
+        box-shadow: 0 0 30px rgba(103, 232, 249, .72);
+        background-color: rgba(103, 232, 249, .18);
+      }
+    }
+
+    @keyframes sequence-pop {
+
+      0%,
+      100% {
+        scale: 1;
+        filter: brightness(1);
+      }
+
+      50% {
+        scale: 1.12;
+        filter: brightness(1.2);
+      }
+    }
+
+    /* Hero entrance motion. Triggered after first paint so it always plays. */
+    .hero-item {
+      opacity: 0;
+      transform: translate3d(0, 28px, 0);
+      transition:
+        opacity 800ms cubic-bezier(.22, 1, .36, 1),
+        transform 800ms cubic-bezier(.22, 1, .36, 1),
+        filter 800ms cubic-bezier(.22, 1, .36, 1);
+      transition-delay: var(--hero-delay, 0ms);
+      will-change: opacity, transform, filter;
+    }
+
+    .hero-item--left {
+      transform: translate3d(-38px, 0, 0);
+    }
+
+    .hero-item--right {
+      transform: translate3d(48px, 0, 0) scale(.96);
+      filter: blur(8px);
+    }
+
+    .hero-item--pop {
+      transform: translate3d(0, 18px, 0) scale(.96);
+    }
+
+    .hero-loaded .hero-item {
+      opacity: 1;
+      transform: translate3d(0, 0, 0) scale(1);
+      filter: blur(0);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0.001ms !important;
+      }
+
+      .reveal {
+        opacity: 1;
+        translate: none;
+      }
+
+      .hero-item {
+        opacity: 1;
+        transform: none;
+        filter: none;
+        transition: none;
+      }
     }
   </style>
 </head>
 
-<body class="min-h-screen bg-[#030712] text-white overflow-x-hidden">
+<body class="min-h-screen overflow-x-hidden bg-slate-950 text-white antialiased">
+  <!-- Decorative background -->
+  <div class="pointer-events-none fixed inset-0 -z-20 glow"></div>
+  <div class="pointer-events-none fixed inset-0 -z-10 grid-pattern"></div>
 
-  <div class="fixed inset-0 glow pointer-events-none"></div>
-
-  <main class="relative max-w-6xl mx-auto px-5 py-10 sm:py-16">
-
-    <!-- Header -->
-    <header class="flex items-center justify-between mb-16">
-      <div class="flex items-center gap-3">
-        <div
-          class="w-11 h-11 rounded-2xl bg-cyan-400 text-slate-950 flex items-center justify-center font-black text-xl shadow-[0_0_30px_rgba(34,211,238,.45)]">
-          ∴
-        </div>
-        <div>
-          <div class="mono text-xl font-black tracking-[0.28em]">
-            TESTING<span class="text-cyan-300">THE</span>TREE
-          </div>
-          <div class="mono text-[10px] text-slate-400 uppercase tracking-[0.25em]">
-            Evolution Simulations · Visual Tools · Mini Games
-          </div>
-        </div>
-      </div>
-
-      <div class="hidden sm:block mono text-xs text-cyan-300 border border-cyan-300/30 rounded-full px-4 py-2">
-        Research Dashboard
-      </div>
-    </header>
-
+  <main>
     <!-- Hero -->
-    <section class="grid lg:grid-cols-[1.1fr_.9fr] gap-10 items-center mb-12">
-      <div>
-        <div class="mono text-cyan-300 text-xs uppercase tracking-[0.35em] mb-4">
-          Interactive Biology Lab
-        </div>
-
-        <h1 class="text-5xl sm:text-7xl font-black leading-[0.95] tracking-tight mb-6">
-          Play with the logic of origins.
-        </h1>
-
-        <p class="text-slate-300 text-lg leading-relaxed max-w-2xl">
-          Explore simulations, visualizations, and mini games that test how we infer ancestry,
-          probability, similarity, and biological history.
-        </p>
+    <section id="hero" class="relative overflow-hidden">
+      <!-- Background glow -->
+      <div
+        class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_70%,rgba(34,211,238,.12),transparent_35%),radial-gradient(circle_at_85%_60%,rgba(132,204,22,.08),transparent_32%)]">
       </div>
 
-      <div class="card rounded-[2rem] p-6">
-        <div class="mono text-xs text-cyan-300 uppercase tracking-widest mb-4">
-          Current Mission
+      <!-- Background grid -->
+      <div class="pointer-events-none absolute inset-0 opacity-30
+    [background-image:linear-gradient(rgba(125,211,252,.045)_1px,transparent_1px),linear-gradient(90deg,rgba(125,211,252,.045)_1px,transparent_1px)]
+    [background-size:28px_28px]"></div>
+
+      <div class="relative mx-auto max-w-[1500px] px-4 pb-12 pt-10 sm:px-6 sm:pb-16 sm:pt-14 lg:px-8 lg:pb-20 lg:pt-20">
+        <div class="grid items-center gap-8 lg:grid-cols-[1fr_1fr] lg:gap-1">
+          <!-- Hero copy -->
+          <div class="relative z-20 text-center lg:text-left">
+            <h1 class="font-black leading-[1.03] tracking-tight">
+              <span
+                class="hero-item hero-item--left mb-3 block break-words bg-gradient-to-r from-cyan-300 via-emerald-300 to-lime-300 bg-clip-text pb-2 text-xl text-transparent drop-shadow-[0_0_10px_rgba(34,211,238,.35)] min-[380px]:text-3xl sm:text-3xl lg:text-3xl">
+                TESTINGTHETREE.COM
+              </span>
+
+              <span class="hero-item inline-block text-5xl sm:text-8xl" style="--hero-delay:120ms">
+                Play and test the logic of </span>
+
+              <span class="hero-item mt-1 inline-block text-purple-400 text-5xl sm:text-8xl" style="--hero-delay:240ms">
+                Origin of Life
+              </span>
+            </h1>
+
+            <p class="hero-item mt-5 max-w-xl text-base leading-7 text-slate-400 sm:mt-6 text-md sm:leading-8 lg:mx-0 lg:text-xl"
+              style="--hero-delay:360ms">
+              Browser-based mini games that challenge how we think life began, and whether all living things really
+              share one common ancestor. For anyone curious about how we know what we know. You don't need a biology background.
+            </p>
+
+            <div
+              class="hero-item hero-item--pop mx-auto mt-7 flex max-w-md flex-col gap-3 sm:mt-8 sm:max-w-none sm:flex-row sm:justify-center lg:mx-0 lg:justify-start"
+              style="--hero-delay:500ms">
+              <a href="#games"
+                class="inline-flex min-h-12 w-full items-center justify-center rounded-2xl bg-gradient-to-r from-violet-500 to-fuchsia-500 px-5 py-3 text-xl font-bold shadow-xl shadow-violet-500/20 transition hover:brightness-110 sm:w-auto sm:px-6 sm:py-3.5">
+                Play
+              </a>
+
+              <a href="https://github.com/gianksp/testingthetree/wiki" target="_blank" rel="noopener noreferrer"
+                class="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-2xl border border-white/10 bg-white/5 px-5 py-3 text-center text-sm font-bold text-white transition hover:border-white/20 hover:bg-white/10 sm:w-auto sm:px-6 sm:py-3.5">
+                <span class="grid size-7 shrink-0 place-items-center rounded-full bg-white text-slate-950">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-4"
+                    aria-hidden="true">
+                    <path fill-rule="evenodd" d="M12 2a10 10 0 00-3.162 19.49c.5.093.683-.217.683-.482
+                  0-.237-.009-.866-.014-1.699-2.782.604-3.37-1.341-3.37-1.341
+                  -.454-1.153-1.11-1.46-1.11-1.46-.908-.62.069-.608.069-.608
+                  1.004.071 1.532 1.03 1.532 1.03.892 1.53 2.341 1.088
+                  2.91.832.09-.646.35-1.088.636-1.338-2.22-.252-4.555-1.11
+                  -4.555-4.943 0-1.092.39-1.986 1.029-2.686-.103-.253-.446
+                  -1.27.098-2.647 0 0 .84-.269 2.75 1.026A9.564 9.564 0
+                  0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.295
+                  2.748-1.026 2.748-1.026.546 1.377.203 2.394.1 2.647.64.7
+                  1.028 1.594 1.028 2.686 0 3.842-2.338 4.688-4.565
+                  4.936.359.31.678.92.678 1.855 0 1.338-.012 2.419-.012
+                  2.749 0 .268.18.58.688.481A10 10 0 0012 2z" clip-rule="evenodd" />
+                  </svg>
+                </span>
+
+                <span class="text-xl">Documentation</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Hero image -->
+          <div class="hero-item hero-item--right relative mx-auto w-full lg:max-w-none" style="--hero-delay:220ms">
+            <div class="pointer-events-none absolute bg-cyan-400/10 blur-3xl"></div>
+
+            <div
+              class="pointer-events-none absolute bottom-[8%] right-[8%] size-1/2 rounded-full bg-lime-400/8 blur-3xl">
+            </div>
+
+            <img src="hero.png" alt="Darwin playing an evolution tree videogame"
+              class="relative z-0 block h-auto w-full object-contain drop-shadow-[0_24px_50px_rgba(0,0,0,.4)] scale-[1.6]" />
+          </div>
         </div>
-        <h2 class="text-2xl font-extrabold mb-3">Classify the unknown.</h2>
-        <p class="text-slate-300 text-sm leading-relaxed mb-5">
-          Each tool gives you a different way to test assumptions about life, ancestry,
-          and biological evidence.
-        </p>
-        <div class="grid grid-cols-3 gap-3 text-center">
-          <div class="rounded-xl bg-white/5 p-3">
-            <div class="text-2xl font-black text-cyan-300">5</div>
-            <div class="mono text-[10px] text-slate-400">TOOLS</div>
-          </div>
-          <div class="rounded-xl bg-white/5 p-3">
-            <div class="text-2xl font-black text-fuchsia-300">1</div>
-            <div class="mono text-[10px] text-slate-400">GAME</div>
-          </div>
-          <div class="rounded-xl bg-white/5 p-3">
-            <div class="text-2xl font-black text-yellow-300">∞</div>
-            <div class="mono text-[10px] text-slate-400">TESTS</div>
-          </div>
+      </div>
+
+      <!-- Bottom fade -->
+      <div
+        class="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-b from-transparent to-[#030712] sm:h-24">
+      </div>
+    </section>
+
+    <!-- Categories -->
+    <section class="border-y border-white/10 bg-white/[0.02]">
+      <div class="mx-auto max-w-7xl overflow-x-auto px-4 py-4 sm:px-6 lg:px-8">
+        <div class="flex min-w-max gap-2">
+          <button class="cursor-pointer rounded-full bg-white px-4 py-2 text-sm font-bold text-slate-950">
+            All Games
+          </button>
         </div>
       </div>
     </section>
 
-    <!-- Tool Cards -->
-    <section class="grid sm:grid-cols-2 gap-5">
-
-      <a href="https://testingthetree.com/ool-gamble" class="card rounded-3xl p-6 transition-all duration-200">
-        <div class="flex items-start gap-4">
-          <div class="w-14 h-14 rounded-2xl bg-yellow-300 text-slate-950 flex items-center justify-center text-2xl">🎲
-          </div>
+    <!-- Games -->
+    <section id="games" class="py-16 sm:py-24">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="flex items-end justify-between gap-4">
           <div>
-            <div class="mono text-[10px] text-yellow-300 uppercase tracking-widest mb-2">Simulation</div>
-            <h2 class="text-2xl font-extrabold mb-2">Origin of Life Gamble</h2>
-            <p class="text-slate-300 text-sm leading-relaxed">
-              Test how rare functional biological sequences are by running probability trials.
-            </p>
-            <p class="mt-4 mono text-xs text-cyan-300">Objective: beat the odds →</p>
+            <div class="text-lg font-bold uppercase tracking-[0.2em] text-violet-300">
+              Play
+            </div>
+            <h2 class="mt-2 text-3xl font-black tracking-tight sm:text-4xl">
+              Games
+            </h2>
           </div>
         </div>
-      </a>
 
-      <a href="https://testingthetree.com/origami-experiment" class="card rounded-3xl p-6 transition-all duration-200">
-        <div class="flex items-start gap-4">
-          <div class="w-14 h-14 rounded-2xl bg-pink-300 text-slate-950 flex items-center justify-center text-2xl">🧩
-          </div>
-          <div>
-            <div class="mono text-[10px] text-pink-300 uppercase tracking-widest mb-2">Simulation</div>
-            <h2 class="text-2xl font-extrabold mb-2">Origami Ancestry Test</h2>
-            <p class="text-slate-300 text-sm leading-relaxed">
-              See why similar shapes do not automatically prove shared history.
-            </p>
-            <p class="mt-4 mono text-xs text-cyan-300">Objective: separate similarity from ancestry →</p>
-          </div>
+        <div class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <!-- Game card -->
+          <article
+            class="game-card reveal overflow-hidden rounded-3xl border border-white/10 bg-white/[0.04] hover:border-violet-400/40 hover:shadow-xl hover:shadow-violet-500/10"
+            style="--delay:0ms">
+
+            <div class="relative aspect-[16/10] bg-gradient-to-br from-violet-700 via-fuchsia-700 to-slate-950">
+              <span
+                class="m-3 inline-block rounded-full bg-white/10 px-2.5 py-0.5 text-xs font-semibold text-slate-300">
+                ~2 min · easy
+              </span>
+              <div class="absolute inset-0 grid place-items-center">
+
+                <div
+                  class="relative rounded-[1.75rem] border border-white/20 bg-white/10 px-5 py-5 shadow-2xl backdrop-blur">
+
+                  <!-- Lever -->
+                  <div class="drift-right absolute -right-4 top-1/2 -translate-y-1/2">
+                    <div class="relative h-14 w-1 rounded-full bg-white/70">
+                      <div class="absolute -top-2 left-1/2 size-4 -translate-x-1/2 rounded-full bg-red-400 shadow-lg">
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Slot Reels -->
+                  <div class="grid grid-cols-3 gap-2">
+
+                    <!-- Column 1 -->
+                    <div class="grid size-11 place-items-center rounded-xl bg-white text-2xl shadow-inner text-red-500">
+                      ❌
+                    </div>
+
+                    <div class="grid size-11 place-items-center rounded-xl bg-white text-2xl shadow-inner text-red-500">
+                      ❌
+                    </div>
+
+                    <div
+                      class="border-2 border-yellow-300 bg-gradient-to-br from-yellow-50 via-white to-yellow-100 text-2xl shadow-[0_0_16px_rgba(253,224,71,0.45)] ring-1 ring-yellow-200/60 relative grid size-11 place-items-center rounded-xl bg-gradient-to-br from-cyan-50 to-white text-2xl shadow-[0_0_18px_rgba(34,211,238,.45)]">
+                      🧬
+
+                      <div class="absolute -right-1 -top-1 text-sm drop-shadow-[0_0_6px_rgba(250,204,21,.8)]">
+                        ⭐
+                      </div>
+                    </div>
+
+                    <!-- Column 2 -->
+                    <div class="grid size-11 place-items-center rounded-xl bg-white text-2xl shadow-inner text-red-500">
+                      ❌
+                    </div>
+
+                    <div class="grid size-11 place-items-center rounded-xl bg-white text-2xl shadow-inner">
+                      🍀
+                    </div>
+
+                    <div
+                      class="border-2 border-yellow-300 bg-gradient-to-br from-yellow-50 via-white to-yellow-100  grid size-11 place-items-center rounded-xl bg-white text-2xl shadow-inner">
+                      🍀
+                    </div>
+
+                    <!-- Column 3 -->
+                    <div class="grid size-11 place-items-center rounded-xl bg-white text-2xl shadow-inner">
+                      🍀
+                    </div>
+
+                    <div class="grid size-11 place-items-center rounded-xl bg-white text-2xl shadow-inner">
+                      🍀
+                    </div>
+
+                    <div
+                      class="border-2 border-yellow-300 bg-gradient-to-br from-yellow-50 via-white to-yellow-100  grid size-11 place-items-center rounded-xl bg-white text-2xl shadow-inner">
+                      🍀
+                    </div>
+
+                  </div>
+
+                </div>
+
+              </div>
+
+            </div>
+
+            <div class="p-5">
+              <div class="flex items-start justify-between gap-3">
+                <div>
+                  <h3 class="text-lg font-extrabold">Life Jackpot</h3>
+                  <p class="mt-1 text-lg text-slate-400">
+                    We already won the life jackpot — we exist. But how good were the odds for the origin of life of
+                    Earth, really? Set the probability
+                    of each step required for life to begin, pull the lever, and try to win the prize.
+                  </p>
+                </div>
+              </div>
+              <div class="mt-5 flex items-center justify-between">
+                <span></span>
+                <a href="https://testingthetree.com/ool-gamble"
+                  class="inline-flex cursor-pointer items-center justify-center rounded-xl bg-white px-4 py-2 text-md font-bold text-slate-950 transition hover:bg-slate-100">
+                  Play
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Game card -->
+          <article
+            class="game-card reveal overflow-hidden rounded-3xl border border-white/10 bg-white/[0.04] hover:border-cyan-400/40 hover:shadow-xl hover:shadow-cyan-500/10"
+            style="--delay:90ms">
+            <div
+              class="relative aspect-[16/10] overflow-hidden bg-gradient-to-br from-cyan-700 via-blue-800 to-slate-950">
+              <span
+                class="m-3 inline-block rounded-full bg-white/10 px-2.5 py-0.5 text-xs font-semibold text-slate-300">
+                ~3 min · medium
+              </span>
+              <!-- Floating pieces -->
+              <div
+                class="float-soft absolute left-8 top-10 grid size-10 place-items-center rounded-xl border border-white/20 bg-white/15 backdrop-blur rotate-12">
+                ◢
+              </div>
+
+              <div
+                class="float-soft absolute right-10 top-14 grid size-10 place-items-center rounded-xl border border-white/20 bg-white/15 backdrop-blur -rotate-12">
+                ◣
+              </div>
+
+              <div
+                class="float-soft absolute left-12 bottom-12 grid size-10 place-items-center rounded-xl border border-white/20 bg-white/15 backdrop-blur rotate-6">
+                ◤
+              </div>
+
+              <!-- Final Origami -->
+              <div class="absolute inset-0 grid place-items-center">
+                <div
+                  class="pulse-soft grid size-28 place-items-center rounded-3xl border border-cyan-300/40 bg-white/10 shadow-[0_0_40px_rgba(34,211,238,.35)] backdrop-blur">
+                  <span class="text-6xl">🕊️</span>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="p-5">
+              <div class="flex items-start justify-between gap-3">
+                <div>
+                  <h3 class="text-lg font-extrabold">Origami Reverse Engineering</h3>
+                  <p class="mt-1 text-lg text-slate-400">
+                    Every origami is made one fold at a time. Can you identify the missing intermediate folds that lead
+                    to a completed figure, and predict which finished models share the same folding path?
+                  </p>
+                </div>
+              </div>
+
+              <div class="mt-5 flex items-center justify-between">
+                <span></span>
+                <a href="https://testingthetree.com/origami-experiment"
+                  class="inline-flex cursor-pointer items-center justify-center rounded-xl bg-white px-4 py-2 text-md font-bold text-slate-950 transition hover:bg-slate-100">
+                  Play
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Game card -->
+          <article
+            class="game-card reveal overflow-hidden rounded-3xl border border-white/10 bg-white/[0.04] hover:border-emerald-400/40 hover:shadow-xl hover:shadow-emerald-500/10"
+            style="--delay:180ms">
+            <div
+              class="relative aspect-[16/10] overflow-hidden bg-gradient-to-br from-emerald-700 via-teal-800 to-slate-950">
+              <span
+                class="m-3 inline-block rounded-full bg-white/10 px-2.5 py-0.5 text-xs font-semibold text-slate-300">
+                ~3 min · medium
+              </span>
+              <!-- Soft glow -->
+              <div
+                class="absolute left-1/2 top-1/2 size-44 -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan-300/15 blur-3xl">
+              </div>
+
+              <!-- Connections -->
+              <svg viewBox="0 0 320 200" class="absolute inset-0 h-full w-full" aria-hidden="true">
+                <g fill="none" stroke="rgb(255 255 255 / 0.38)" stroke-width="3" stroke-linecap="round">
+                  <path d="M160 44 L100 100" />
+                  <path d="M160 44 L220 100" />
+                  <path d="M100 100 L65 158" />
+                  <path d="M100 100 L135 158" />
+                  <path d="M220 100 L220 158" />
+                </g>
+              </svg>
+
+              <!-- Root -->
+              <div
+                class="absolute left-1/2 top-[22%] grid size-12 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-2xl border border-white/25 bg-white/15 text-2xl shadow-lg backdrop-blur">
+                👾
+              </div>
+
+              <!-- Internal nodes -->
+              <div
+                class="absolute left-[31.25%] top-1/2 grid size-11 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-2xl border border-white/20 bg-white/15 text-xl backdrop-blur">
+                👽
+              </div>
+
+              <div
+                class="absolute left-[68.75%] top-1/2 grid size-11 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-2xl border border-white/20 bg-white/15 text-xl backdrop-blur">
+                🐙
+              </div>
+
+              <!-- Leaves -->
+              <div
+                class="absolute left-[20.3%] top-[79%] grid size-10 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-xl border border-white/20 bg-white/15 text-lg backdrop-blur">
+                🦠
+              </div>
+
+              <div
+                class="absolute left-[42.2%] top-[79%] grid size-10 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-xl border border-white/20 bg-white/15 text-lg backdrop-blur">
+                👁️
+              </div>
+
+              <!-- Empty drop slot -->
+              <div
+                class="glow-pulse absolute left-[68.75%] top-[79%] grid size-10 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-xl border-2 border-dashed border-cyan-300 bg-cyan-300/10 text-lg font-black text-cyan-100 shadow-[0_0_20px_rgba(103,232,249,.45)]">
+                ?
+              </div>
+
+              <!-- Floating specimen -->
+              <div
+                class="drift-left absolute right-[10%] top-[66%] grid size-9 rotate-6 place-items-center rounded-xl border border-white/25 bg-white/20 text-base shadow-xl backdrop-blur">
+                🛸
+              </div>
+            </div>
+
+            <div class="p-5">
+              <div class="flex items-start justify-between gap-3">
+                <div>
+                  <h3 class="text-lg font-extrabold">Xenobiology Classification Lab</h3>
+                  <p class="mt-1 text-lg text-slate-400">
+                    Study the traits of six alien species and reconstruct their
+                    evolutionary tree by placing each specimen in the correct position. Test your
+                    ability to recognize shared ancestry and evolutionary relationships.
+                  </p>
+                </div>
+              </div>
+
+              <div class="mt-5 flex items-center justify-between">
+                <span></span>
+                <a href="https://testingthetree.com/phylo-game"
+                  class="inline-flex cursor-pointer items-center justify-center rounded-xl bg-white px-4 py-2 text-md font-bold text-slate-950 transition hover:bg-slate-100">
+                  Play
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Game card -->
+          <article
+            class="game-card reveal overflow-hidden rounded-3xl border border-white/10 bg-white/[0.04] hover:border-pink-400/40 hover:shadow-xl hover:shadow-pink-500/10"
+            style="--delay:270ms">
+            <div
+              class="relative aspect-[16/10] overflow-hidden bg-gradient-to-br from-pink-700 via-rose-800 to-slate-950">
+              <span
+                class="m-3 inline-block rounded-full bg-white/10 px-2.5 py-0.5 text-xs font-semibold text-slate-300">
+                ~2 min · easy
+              </span>
+              <!-- Single LUCA -->
+              <div
+                class="absolute left-[28%] top-1/2 grid size-14 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full border border-cyan-300/60 bg-cyan-400/20 text-4xl shadow-[0_0_24px_rgba(34,211,238,.45)] backdrop-blur">
+                🦠
+              </div>
+
+              <!-- Divider -->
+              <div
+                class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-3xl font-black text-white/60">
+                VS
+              </div>
+
+              <!-- Population -->
+              <div class="absolute right-[12%] top-1/2 -translate-y-1/2">
+                <div class="grid grid-cols-3 gap-2">
+                  <div class="grid size-8 place-items-center rounded-full bg-white/15 backdrop-blur">🦠</div>
+                  <div class="grid size-8 place-items-center rounded-full bg-white/15 backdrop-blur">🦠</div>
+                  <div class="grid size-8 place-items-center rounded-full bg-white/15 backdrop-blur">🦠</div>
+
+                  <div class="grid size-8 place-items-center rounded-full bg-white/15 backdrop-blur">🦠</div>
+                  <div
+                    class="grid size-8 place-items-center rounded-full border border-pink-300/60 bg-pink-400/20 shadow-[0_0_12px_rgba(244,114,182,.45)] backdrop-blur">
+                    🦠</div>
+                  <div class="grid size-8 place-items-center rounded-full bg-white/15 backdrop-blur">🦠</div>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="p-5">
+              <div class="flex items-start justify-between gap-3">
+                <div>
+                  <h3 class="text-lg font-extrabold">Was LUCA a Single Cell or a Population?</h3>
+                  <p class="mt-1 text-lg text-slate-400">
+                    Scientists call the ancestor of all life the Last Universal Common Ancestor or "LUCA" — but was it
+                    one single cell, or a whole population
+                    of them as some modern biologists posit? Walk through both ideas and see what each one means for how
+                    life actually began.
+                  </p>
+                </div>
+              </div>
+
+              <div class="mt-5 flex items-center justify-between">
+                <span></span>
+                <a href="https://testingthetree.com/one-few-many"
+                  class="inline-flex cursor-pointer items-center justify-center rounded-xl bg-white px-4 py-2 text-md font-bold text-slate-950 transition hover:bg-slate-100">
+                  Play
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Game card -->
+          <article
+            class="game-card reveal overflow-hidden rounded-3xl border border-white/10 bg-white/[0.04] hover:border-orange-400/40 hover:shadow-xl hover:shadow-orange-500/10"
+            style="--delay:360ms">
+
+            <div
+              class="relative aspect-[16/10] overflow-hidden bg-gradient-to-br from-orange-600 via-red-800 to-slate-950">
+              <span
+                class="m-3 inline-block rounded-full bg-white/10 px-2.5 py-0.5 text-xs font-semibold text-slate-300">
+                ~5 min · hard
+              </span>
+              <!-- Glow -->
+              <div
+                class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,.08),transparent_70%)]">
+              </div>
+
+              <!-- Tree -->
+              <svg class="absolute left-4 top-1/2 h-28 w-20 -translate-y-1/2">
+                <g stroke="rgba(255,255,255,.45)" stroke-width="2.5" fill="none" stroke-linecap="round">
+                  <path d="M16 56 H36" />
+                  <path d="M36 18 V94" />
+                  <path d="M36 30 H64" />
+                  <path d="M36 82 H64" />
+                  <path d="M64 30 V50" />
+                  <path d="M64 62 V82" />
+                  <path d="M64 18 H76" />
+                  <path d="M64 50 H76" />
+                  <path d="M64 62 H76" />
+                  <path d="M64 94 H76" />
+                </g>
+              </svg>
+
+              <!-- Alignment -->
+              <div class="absolute left-28 right-4 top-1/2 -translate-y-1/2 space-y-2">
+
+                <div class="flex gap-1">
+                  <span class="size-6 rounded bg-green-500"></span>
+                  <span class="size-6 rounded bg-slate-100/10"></span>
+                  <span class="size-6 rounded sequence-pop bg-amber-400 ring-2 ring-amber-300"></span>
+                  <span class="size-6 rounded bg-slate-100/10"></span>
+                  <span class="size-6 rounded bg-green-500"></span>
+                  <span class="size-6 rounded bg-slate-100/10"></span>
+                  <span class="size-6 rounded bg-slate-100/10"></span>
+                  <span class="size-6 rounded bg-cyan-400"></span>
+                </div>
+
+                <div class="flex gap-1">
+                  <span class="size-6 rounded bg-green-500"></span>
+                  <span class="size-6 rounded bg-slate-100/10"></span>
+                  <span class="size-6 rounded sequence-pop bg-red-500 ring-2 ring-red-300"></span>
+                  <span class="size-6 rounded bg-slate-100/10"></span>
+                  <span class="size-6 rounded bg-green-500"></span>
+                  <span class="size-6 rounded bg-slate-100/10"></span>
+                  <span class="size-6 rounded bg-slate-100/10"></span>
+                  <span class="size-6 rounded bg-cyan-400"></span>
+                </div>
+
+                <div class="flex gap-1">
+                  <span class="size-6 rounded bg-green-500"></span>
+                  <span class="size-6 rounded bg-slate-100/10"></span>
+                  <span class="size-6 rounded sequence-pop bg-amber-400 ring-2 ring-amber-300"></span>
+                  <span class="size-6 rounded bg-slate-100/10"></span>
+                  <span class="size-6 rounded bg-green-500"></span>
+                  <span class="size-6 rounded bg-slate-100/10"></span>
+                  <span class="size-6 rounded bg-slate-100/10"></span>
+                  <span class="size-6 rounded bg-cyan-400"></span>
+                </div>
+
+                <div class="flex gap-1">
+                  <span class="size-6 rounded bg-green-500"></span>
+                  <span class="size-6 rounded bg-slate-100/10"></span>
+                  <span class="size-6 rounded sequence-pop bg-red-500 ring-2 ring-red-300"></span>
+                  <span class="size-6 rounded bg-slate-100/10"></span>
+                  <span class="size-6 rounded bg-green-500"></span>
+                  <span class="size-6 rounded bg-slate-100/10"></span>
+                  <span class="size-6 rounded bg-slate-100/10"></span>
+                  <span class="size-6 rounded bg-cyan-400"></span>
+                </div>
+
+              </div>
+
+            </div>
+
+            <div class="p-5">
+              <div class="flex items-start justify-between gap-3">
+                <div>
+                  <h3 class="text-lg font-extrabold">Cytochrome-C Challenge</h3>
+                  <p class="mt-1 text-lg text-slate-400">
+                    Can one protein tell the story of how species are related? Compare a shared protein across dozens of
+                    plants, build a family tree from the differences you find, and see where this method works well —
+                    and where it breaks down.
+                  </p>
+                </div>
+              </div>
+
+              <div class="mt-5 flex items-center justify-between">
+                <span></span>
+                <a href="https://testingthetree.com/phyloviz"
+                  class="inline-flex cursor-pointer items-center justify-center rounded-xl bg-white px-4 py-2 text-md font-bold text-slate-950 transition hover:bg-slate-100">
+                  Play
+                </a>
+              </div>
+            </div>
+          </article>
         </div>
-      </a>
-
-      <a href="https://testingthetree.com/phyloviz" class="card rounded-3xl p-6 transition-all duration-200">
-        <div class="flex items-start gap-4">
-          <div class="w-14 h-14 rounded-2xl bg-cyan-300 text-slate-950 flex items-center justify-center text-2xl">🌳
-          </div>
-          <div>
-            <div class="mono text-[10px] text-cyan-300 uppercase tracking-widest mb-2">Visualization Tool</div>
-            <h2 class="text-2xl font-extrabold mb-2">Phylogenetic Tree Visualizer</h2>
-            <p class="text-slate-300 text-sm leading-relaxed">
-              Explore tree diagrams built from sequence data and inspect their assumptions.
-            </p>
-            <p class="mt-4 mono text-xs text-cyan-300">Objective: read the tree critically →</p>
-          </div>
-        </div>
-      </a>
-
-      <a href="https://testingthetree.com/phylo-game" class="card rounded-3xl p-6 transition-all duration-200">
-        <div class="flex items-start gap-4">
-          <div class="w-14 h-14 rounded-2xl bg-purple-300 text-slate-950 flex items-center justify-center text-2xl">👾
-          </div>
-          <div>
-            <div class="mono text-[10px] text-purple-300 uppercase tracking-widest mb-2">Mini Game</div>
-            <h2 class="text-2xl font-extrabold mb-2">Xenobiology Classification Lab</h2>
-            <p class="text-slate-300 text-sm leading-relaxed">
-              Sort alien specimens into hidden evolutionary groups using trait clues.
-            </p>
-            <p class="mt-4 mono text-xs text-cyan-300">Objective: discover the true clades →</p>
-          </div>
-        </div>
-      </a>
-
-      <a href="https://testingthetree.com/one-few-many" class="card rounded-3xl p-6 transition-all duration-200">
-        <div class="flex items-start gap-4">
-          <div class="w-14 h-14 rounded-2xl bg-emerald-300 text-slate-950 flex items-center justify-center text-2xl shrink-0">🦠</div>
-          <div>
-            <div class="mono text-[10px] text-emerald-300 uppercase tracking-widest mb-2">Interactive Argument</div>
-            <h2 class="text-2xl font-extrabold mb-2">One, Few, or Many?</h2>
-            <p class="text-slate-300 text-sm leading-relaxed">
-              Was LUCA a single cell or a population? Follow the logic and discover why the answer forces a surprising
-              choice.
-            </p>
-            <p class="mt-4 mono text-xs text-cyan-300">Objective: find the logical trap →</p>
-          </div>
-        </div>
-      </a>
-
+      </div>
     </section>
-
-    <footer class="mt-14 pt-6 border-t border-white/10">
-      <p class="mono text-xs text-slate-500">
-        Built as interactive thought experiments. Test the models. Inspect the assumptions.
-      </p>
-    </footer>
-
   </main>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const hero = document.querySelector("#hero");
+
+      if (hero) {
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => hero.classList.add("hero-loaded"));
+        });
+      }
+
+      const elements = document.querySelectorAll(".reveal");
+
+      if (!("IntersectionObserver" in window)) {
+        elements.forEach((element) => element.classList.add("is-visible"));
+        return;
+      }
+
+      const observer = new IntersectionObserver(
+        (entries, currentObserver) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            entry.target.classList.add("is-visible");
+            currentObserver.unobserve(entry.target);
+          });
+        },
+        {
+          threshold: 0.08,
+          rootMargin: "0px 0px -40px 0px"
+        }
+      );
+
+      elements.forEach((element) => observer.observe(element));
+
+      /* Reveal anything already visible immediately after layout. */
+      requestAnimationFrame(() => {
+        elements.forEach((element) => {
+          const rect = element.getBoundingClientRect();
+          if (rect.top < window.innerHeight && rect.bottom > 0) {
+            element.classList.add("is-visible");
+            observer.unobserve(element);
+          }
+        });
+      });
+    });
+  </script>
+
 </body>
 
 </html>
