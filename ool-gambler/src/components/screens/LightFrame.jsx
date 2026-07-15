@@ -24,7 +24,7 @@ function Bulb({ color, delay, duration, active }) {
     );
 }
 
-export default function LightFrame({ children, top = 14, side = 8, active = true, maxWidth = "max-w-3xl" }) {
+export default function LightFrame({ children, top = 14, side = 8, active = true, maxWidth = "max-w-4xl" }) {
     const bulbs = useMemo(() => {
         const order = [];
         for (let i = 0; i < top; i++) order.push("top");

@@ -7,7 +7,7 @@ export default function Lever({ pulling, disabled, onPull, label, compact = fals
             onClick={onPull}
             disabled={disabled}
             aria-label="Pull the lever"
-            className="flex shrink-0 flex-col items-center gap-1.5 disabled:cursor-not-allowed disabled:opacity-60"
+            className="cursor-pointer flex shrink-0 flex-col items-center gap-1.5 disabled:cursor-not-allowed disabled:opacity-60"
         >
             <svg viewBox="0 0 120 170" className={sizeClass} xmlns="http://www.w3.org/2000/svg">
                 <defs>

@@ -7,7 +7,7 @@ function App() {
   const [screen, setScreen] = useState('intro') // 'intro' | 'wapper' | 'game'
 
   if (screen === 'intro') return <VegasIntro onPlay={() => setScreen('wapper')} />
-  if (screen === 'wapper') return <WapperScreen onContinue={() => setScreen('game')} />
+  // if (screen === 'wapper') return <WapperScreen onContinue={() => setScreen('game')} />
   return <GambleSimulationApp />
 }
 
