@@ -25,14 +25,14 @@ export default function WapperResultModal({ result, onClose, onAdjust }) {
                 Hold On — <span className="text-cyan-300">{survivorCount} Independent Origins</span>
             </>
         );
-        resultLine = `${survivorCount} separate lineages reached the end on their own, with no WAP fallback needed.`;
+        resultLine = `${survivorCount} different tries hit the jackpot on their own, without the WAPPER.`;
         boxTitle = "Why This Matters";
         boxBody =
-            "If origin-of-life events are common enough to happen more than once in the same run, that's worth taking seriously. Try these odds again, or push them further, and see how often it keeps happening.";
+            "If the odds make more than one origin possible, that's worth thinking about. You were only supposed to need one.";
         frameColor = "cyan";
     } else if (wapApplied) {
         resultLine =
-            "Every lineage you tried failed. Lucky for you, the WAPPER kicked in anyway and we have at least one origin of life event.";
+            "Every lineage you tried failed. Lucky for you, the WAPPER kicked in anyway and we have at least one origin of life event. Here is your cheap plastic trophy as a consolation prize!";
     } else if (survivorCount === 1) {
         resultLine =
             "One environment made it to the end on its own. A single success is exactly what the weak anthropic principle predicts — you exist, so you win, regardless.";
