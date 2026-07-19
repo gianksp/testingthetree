@@ -15,6 +15,7 @@ type HeaderProps = {
   fitToScreen: () => void;
   setSelection: React.Dispatch<React.SetStateAction<Selection | null>>;
   setFastaPanelLeaf: React.Dispatch<React.SetStateAction<string | null>>;
+  onOpenIntro?: () => void;
 };
 
 export default function Header({
@@ -31,6 +32,7 @@ export default function Header({
   fitToScreen,
   setSelection,
   setFastaPanelLeaf,
+  onOpenIntro,
 }: HeaderProps) {
   return (
     <div className="relative flex items-center px-3 py-2 border-b border-slate-200 bg-white">
@@ -44,6 +46,15 @@ export default function Header({
         >
           ☰
         </button>
+        {onOpenIntro && (
+          <button
+            onClick={onOpenIntro}
+            aria-label="About this tool"
+            className="flex h-5 w-5 items-center justify-center rounded-full border border-slate-300 text-[11px] font-semibold text-slate-500 hover:border-slate-500 hover:text-slate-900 transition cursor-pointer"
+          >
+            ?
+          </button>
+        )}
       </div>
 
       {/* Center (true center, independent of sides) */}

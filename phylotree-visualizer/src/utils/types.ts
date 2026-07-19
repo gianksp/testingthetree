@@ -11,7 +11,7 @@ export type SelectionMode = "ancestry" | "clade";
 export interface Selection { nodeId: number; mode: SelectionMode; }
 export type VisualizationTab = "tree" | "heatmap" | "conservation" | "scatter" | "stats";
 export interface Tooltip { x: number; y: number; char: string; pos: number; taxon: string; }
-export interface PhyloTreeProps { newick?: string; fasta?: string; className?: string; }
+export interface PhyloTreeProps { newick?: string; fasta?: string; className?: string; onOpenIntro?: () => void; }
 export interface BranchRow {
   nodeLabel: string; isLeaf: boolean; parentLabel: string;
   length: number; support?: number; pathFromRoot: number;

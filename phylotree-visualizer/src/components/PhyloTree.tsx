@@ -31,7 +31,7 @@ import type { TreeNode } from "../utils/types";
 
 const { ROW_H, SEQ_X, CLADE_COLOR } = TREE_CONSTANTS;
 
-export default function PhyloTree({ newick: newickProp, fasta: fastaProp }: PhyloTreeProps) {
+export default function PhyloTree({ newick: newickProp, fasta: fastaProp, onOpenIntro }: PhyloTreeProps) {
   const {
     newickText, setNewickText,
     fastaText, setFastaText,
@@ -46,10 +46,10 @@ export default function PhyloTree({ newick: newickProp, fasta: fastaProp }: Phyl
   const [transform, setTransform] = useState<Transform>({ x: 16, y: 16, scale: 1 });
   const [tooltip, setTooltip] = useState<Tooltip | null>(null);
   const [showSupport, setShowSupport] = useState(true);
-  const [showBranchLen, setShowBranchLen] = useState(false);
-  const [showMutations, setShowMutations] = useState(false);
-  const [showLegend, setShowLegend] = useState(false);
-  const [showSequenceLetter, setShowSequenceLetter] = useState(false);
+  const [showBranchLen, setShowBranchLen] = useState(true);
+  const [showMutations, setShowMutations] = useState(true);
+  const [showLegend, setShowLegend] = useState(true);
+  const [showSequenceLetter, setShowSequenceLetter] = useState(true);
   const [menuOpen, setMenuOpen] = useState(false);
 
   const canvasRef = useRef<HTMLDivElement>(null);
@@ -151,6 +151,7 @@ export default function PhyloTree({ newick: newickProp, fasta: fastaProp }: Phyl
           color=""
           isClade={false}
           activeTab="tree"
+          onOpenIntro={onOpenIntro}
         />
         <SideMenu {...sideMenuProps} />
       </div>
@@ -187,6 +188,7 @@ export default function PhyloTree({ newick: newickProp, fasta: fastaProp }: Phyl
         setSelection={setSelection}
         setFastaPanelLeaf={setFastaPanelLeaf}
         activeTab="tree"
+        onOpenIntro={onOpenIntro}
       />
 
       <SideMenu {...sideMenuProps} />
@@ -195,7 +197,7 @@ export default function PhyloTree({ newick: newickProp, fasta: fastaProp }: Phyl
         <div className="relative flex min-h-0 flex-1 flex-col overflow-hidden">
           <div
             ref={canvasRef}
-            className="relative min-h-0 flex-1 overflow-auto bg-white"
+            className="relative min-h-0 flex-1 overflow-hidden touch-none bg-white"
             onMouseDown={onMouseDown}
             onMouseMove={onMouseMove}
             onMouseUp={onMouseUp}
