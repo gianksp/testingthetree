@@ -13,14 +13,11 @@ export default function HowToPlay({ onStart }) {
                 {/* title */}
                 <div className="w-full text-center pt-12 my-4">
                     <h1
-                        className="text-4xl sm:text-5xl md:text-7xl font-black tracking-widest text-white uppercase"
+                        className="text-2xl sm:text-3xl font-black tracking-widest text-white uppercase"
                         style={{ fontFamily: 'Orbitron, monospace' }}
                     >
-                        Phylo<span className="text-cyan-400">Quest</span>
+                        Xenobiology<span className="text-cyan-400"> Classification Lab</span>
                     </h1>
-                    <p className="text-xs sm:text-sm text-slate-500 mt-2 tracking-widest uppercase">
-                        Xenobiology Classification Lab
-                    </p>
                 </div>
 
                 {/* alien + mission card */}

@@ -528,13 +528,15 @@ function ResultBadges({ result, resolved }) {
         </div>
       )}
       {result.wapFilledEnv !== null && (
-        <div className="rounded-full border border-yellow-400/40 bg-yellow-400/10 px-3 py-1.5 text-sm font-medium text-yellow-300">
-          Fallback saved environment {result.wapFilledEnv + 1}
-        </div>
+        <>
+          <div className="rounded-full border border-yellow-400/40 bg-yellow-400/10 px-3 py-1.5 text-sm font-medium text-yellow-300">
+            Fallback saved environment {result.wapFilledEnv + 1}
+          </div>
+          <div className="rounded-full border border-yellow-400/40 bg-yellow-400/10 px-3 py-1.5 text-sm font-medium text-yellow-300">
+            🏆 WAPPER won
+          </div>
+        </>
       )}
-      <div className="rounded-full border border-yellow-400/40 bg-yellow-400/10 px-3 py-1.5 text-sm font-medium text-yellow-300">
-        🏆 WAPPER won
-      </div>
     </div>
   );
 }
@@ -934,7 +936,7 @@ function GambleSimulationApp() {
 
   useEffect(() => {
     if (phase !== "resolved") return;
-    const t = setTimeout(() => setResultModalOpen(true), 2500);
+    const t = setTimeout(() => setResultModalOpen(true), 1000);
     return () => clearTimeout(t);
   }, [phase, runKey]);
 

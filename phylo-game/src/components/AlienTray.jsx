@@ -73,14 +73,16 @@ export default function AlienTray({
                                 <div
                                     onPointerDown={(e) => onPointerDown(e, alien)}
                                     className={`
+                    w-32 h-48 overflow-y-auto [&::-webkit-scrollbar]:hidden
                     rounded-xl border-2 bg-white cursor-grab active:cursor-grabbing
-                    transition-all duration-150 select-none touch-none
+                    transition-all duration-150 select-none
                     hover:-translate-y-1 hover:shadow-lg hover:shadow-black/40
                     ${draggingId === alien.instanceId
-                                            ? 'opacity-40 scale-95 border-slate-300'
-                                            : 'border-slate-300 hover:border-cyan-400'
+                                            ? 'opacity-40 scale-95 border-slate-300 touch-none'
+                                            : 'border-slate-300 hover:border-cyan-400 touch-pan-x'
                                         }
                   `}
+                                    style={{ scrollbarWidth: 'none' }}
                                 >
                                     <AlienCard
                                         alien={alien}

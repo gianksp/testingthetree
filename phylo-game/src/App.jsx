@@ -16,9 +16,13 @@ export default function App() {
   const [draggingFile, setDraggingFile] = useState(null)
   const [ghostPos, setGhostPos] = useState({ x: 0, y: 0 })
   const [overNode, setOverNode] = useState(null)
+  const [showHint, setShowHint] = useState(false)
 
   const draggingIdRef = useRef(null)
   const overNodeRef = useRef(null)
+  const pendingRef = useRef(null) // { alien, startX, startY } — touched but not yet past drag threshold
+
+  const DRAG_THRESHOLD = 8 // px of movement before a touch/press counts as a drag
 
   const {
     rule, aliens, placement, phase, result,
@@ -37,25 +41,42 @@ export default function App() {
     return null
   }, [])
 
-  const handlePointerDown = useCallback((e, alien) => {
-    e.preventDefault()
+  const beginDrag = useCallback((alien, clientX, clientY) => {
     draggingIdRef.current = alien.instanceId
     setDraggingId(alien.instanceId)
     setDraggingFile(alien.file)
-    setGhostPos({ x: e.clientX, y: e.clientY })
+    setGhostPos({ x: clientX, y: clientY })
+  }, [])
+
+  // Don't start the drag immediately — just remember the touch. Cards use
+  // touch-action: pan-x, so a horizontal swipe is left to the browser to
+  // scroll the tray natively. Only once the finger moves past the threshold
+  // (e.g. a vertical lift toward the tree) do we treat it as a drag.
+  const handlePointerDown = useCallback((e, alien) => {
+    pendingRef.current = { alien, startX: e.clientX, startY: e.clientY }
   }, [])
 
   const handlePointerMove = useCallback((e) => {
-    if (!draggingIdRef.current) return
+    if (!draggingIdRef.current) {
+      const pending = pendingRef.current
+      if (!pending) return
+      const dx = e.clientX - pending.startX
+      const dy = e.clientY - pending.startY
+      if (Math.hypot(dx, dy) < DRAG_THRESHOLD) return
+      pendingRef.current = null
+      beginDrag(pending.alien, e.clientX, e.clientY)
+      return
+    }
     setGhostPos({ x: e.clientX, y: e.clientY })
     const nodeId = getNodeUnderPointer(e.clientX, e.clientY)
     if (nodeId !== overNodeRef.current) {
       overNodeRef.current = nodeId
       setOverNode(nodeId)
     }
-  }, [getNodeUnderPointer])
+  }, [getNodeUnderPointer, beginDrag])
 
   const handlePointerUp = useCallback((e) => {
+    pendingRef.current = null
     if (!draggingIdRef.current) return
     const nodeId = getNodeUnderPointer(e.clientX, e.clientY)
     if (nodeId !== null) {
@@ -68,14 +89,31 @@ export default function App() {
     setOverNode(null)
   }, [getNodeUnderPointer, dropOnNode])
 
+  // If the browser takes the pointer over for native scrolling (or any other
+  // reason it cancels), clear pending/dragging state so nothing gets stuck.
+  const handlePointerCancel = useCallback(() => {
+    pendingRef.current = null
+    draggingIdRef.current = null
+    overNodeRef.current = null
+    setDraggingId(null)
+    setDraggingFile(null)
+    setOverNode(null)
+  }, [])
+
   useEffect(() => {
     window.addEventListener('pointermove', handlePointerMove)
     window.addEventListener('pointerup', handlePointerUp)
+    window.addEventListener('pointercancel', handlePointerCancel)
     return () => {
       window.removeEventListener('pointermove', handlePointerMove)
       window.removeEventListener('pointerup', handlePointerUp)
+      window.removeEventListener('pointercancel', handlePointerCancel)
     }
-  }, [handlePointerMove, handlePointerUp])
+  }, [handlePointerMove, handlePointerUp, handlePointerCancel])
+
+  useEffect(() => {
+    setShowHint(false)
+  }, [rule])
 
   if (loading) return (
     <div className="fixed inset-0 flex items-center justify-center bg-slate-950">
@@ -129,7 +167,7 @@ export default function App() {
               className="text-xl md:text-2xl font-black tracking-widest text-white"
               style={{ fontFamily: 'Orbitron, monospace' }}
             >
-              Phylo<span className="text-cyan-400">Quest</span>
+              Xeno<span className="text-cyan-400">Lab</span>
             </h1>
             <p className="text-[10px] text-slate-500 tracking-wider hidden sm:block">
               Place each specimen on its correct ancestor node
@@ -144,10 +182,17 @@ export default function App() {
                 `} />
               ))}
             </div>
-            <div className="flex items-center gap-1.5 bg-violet-950 border border-violet-800 rounded-full px-3 py-1.5">
-              <span className="text-[9px] font-bold text-violet-400 tracking-widest uppercase">Hint</span>
-              <span className="text-xs font-bold text-violet-200 font-mono">{rule.traitKey}</span>
-            </div>
+            <button
+              onClick={() => setShowHint(v => !v)}
+              className="flex items-center gap-1.5 bg-violet-950 border border-violet-800 rounded-full px-3 py-1.5 active:scale-95 transition-transform"
+            >
+              <span className="text-[9px] font-bold text-violet-400 tracking-widest uppercase">
+                {showHint ? 'Hint' : 'Show Hint'}
+              </span>
+              {showHint && (
+                <span className="text-xs font-bold text-violet-200 font-mono">{rule.traitKey}</span>
+              )}
+            </button>
           </div>
         </div>
       </header>

@@ -34,8 +34,22 @@ export default function WapperResultModal({ result, onClose, onAdjust }) {
         resultLine =
             "Every lineage you tried failed. Lucky for you, the WAPPER kicked in anyway and we have at least one origin of life event. Here is your cheap plastic trophy as a consolation prize!";
     } else if (survivorCount === 1) {
+        // Legit single survivor, no WAPPER fallback involved — this is a real, earned win and
+        // needs its own headline/box copy. Previously this only overrode resultLine, so the
+        // headline/box still displayed the default "You Win The WAPPER" framing even though the
+        // WAPPER never fired. Mirrors the multiOrigin branch's full override.
+        icon = "🧬";
+        headline = (
+            <>
+                You Win — <span className="text-cyan-300">No WAPPER Needed</span>
+            </>
+        );
         resultLine =
             "One environment made it to the end on its own. A single success is exactly what the weak anthropic principle predicts — you exist, so you win, regardless.";
+        boxTitle = "Why This Matters";
+        boxBody =
+            "This is a real, earned survival — not the after-the-fact fallback. The WAPPER didn't need to step in.";
+        frameColor = "cyan";
     }
 
     const borderClass =
@@ -62,7 +76,7 @@ export default function WapperResultModal({ result, onClose, onAdjust }) {
                             ✕
                         </button>
 
-                        {multiOrigin ? (
+                        {icon === "🧬" ? (
                             <div className="mx-auto flex h-20 w-20 items-center justify-center text-5xl sm:h-24 sm:w-24">
                                 {icon}
                             </div>
